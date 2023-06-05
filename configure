@@ -68,11 +68,13 @@ EOF
 			CXX="`${R} CMD config CXX`"
 			if [ -z "$OMP_FLAG" ]; then
 			    OMP_FLAG="--disable-openmp"
-			fi 
+			fi  
 
 		fi
-		
-		CXX = $(shell echo $(CXX) | sed -e s/++17/++14/g )
+
+    echo "CXX is ${CXX}"
+    CXX="`echo ${CXX} | sed -e s/++17/++14/g`"
+    echo "CXX is ${CXX}"
 
             rm -f test.*
 	    (cd src/SYMPHONY && \
@@ -92,7 +94,12 @@ EOF
 	    SYMPHONY_TS="SYMPHONY.ts"
 
         # for other (Unix) systems use
-        else
+  else
+    CXX="`R CMD config CXX`"
+    echo "CXX is ${CXX}"
+    CXX="`echo ${CXX} | sed -e s/++17/++14/g`"
+    echo "CXX is ${CXX}"
+  
 	    (cd src/SYMPHONY && \
 		./configure \
 		--enable-static --disable-shared --with-pic \
