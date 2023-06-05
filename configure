@@ -54,8 +54,8 @@ else
 		}
 EOF
 
-                # first test the default gcc used by R
-                `R CMD config CC` -lgomp test.c -o test >/dev/null 2>&1
+    # first test the default gcc used by R
+    `R CMD config CC` -lgomp test.c -o test >/dev/null 2>&1
 		if [[ $? -eq 0 ]]; then
 			echo -e "* Using the default compiler"
 			CC="`R CMD config CC`"
@@ -63,8 +63,8 @@ EOF
 			OMP_FLAG="--enable-openmp"
 		# if there is no brew gcc installed try to compile with clang
 		else
-		        echo -e "* Defaulting to clang/clang++"
-		        CC="`${R} CMD config CC`"
+		  echo -e "* Defaulting to clang/clang++"
+		  CC="`${R} CMD config CC`"
 			CXX="`${R} CMD config CXX`"
 			if [ -z "$OMP_FLAG" ]; then
 			    OMP_FLAG="--disable-openmp"
@@ -72,6 +72,7 @@ EOF
 
 		fi
 		
+		CXX = $(shell echo $(CXX) | sed -e s/++17/++14/g )
 
             rm -f test.*
 	    (cd src/SYMPHONY && \

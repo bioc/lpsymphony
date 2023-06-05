@@ -29,5 +29,5 @@ URL: http://R-Forge.R-project.org/projects/rsymphony,
 biocViews: Infrastructure, ThirdPartyClient
 VignetteBuilder: knitr
 NeedsCompilation: yes
-SystemRequirements: GNU make, C++14
+SystemRequirements: GNU make
 Repository: Bioconductor
