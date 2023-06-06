@@ -73,27 +73,27 @@ EOF
 		fi
 
     echo "CXX is ${CXX}"
-    CXX="`echo ${CXX} | sed -e s/++17/++14/g`"
+    CXX="`echo ${CXX} | sed -e s/++[0-9][0-9]/++14/g`"
     echo "CXX is ${CXX}"
 
-            rm -f test.*
-	    (cd src/SYMPHONY && \
-		    ./configure \
+    rm -f test.*
+	  (cd src/SYMPHONY && \
+		  ./configure \
 			CC="$CC" CXX="$CXX" \
 			CFLAGS="-w -g -O2" \
 			CXXFLAGS="-w -g -O2" \
-		--enable-static --disable-shared --with-pic \
-		--with-application=no --disable-dependency-tracking \
-		--disable-zlib --disable-bzlib "${OMP_FLAG}" \
-		--disable-cplex-libcheck --disable-glpk-libcheck \
-		--disable-osl-libcheck --disable-soplex-libcheck \
-		--disable-xpress-libcheck)
+		  --enable-static --disable-shared --with-pic \
+		  --with-application=no --disable-dependency-tracking \
+		  --disable-zlib --disable-bzlib "${OMP_FLAG}" \
+		  --disable-cplex-libcheck --disable-glpk-libcheck \
+		  --disable-osl-libcheck --disable-soplex-libcheck \
+		  --disable-xpress-libcheck)
 	    SYMPHONY_LIBS="-lSym -lCgl -lOsiClp -lClp -lOsi -lCoinUtils"
 	    SYMPHONY_INCLUDE_PATH="-ISYMPHONY/include"
 	    SYMPHONY_LIB_PATH="-LSYMPHONY/lib"
 	    SYMPHONY_TS="SYMPHONY.ts"
 
-        # for other (Unix) systems use
+  # for other (Unix) systems use
   else
     CXX="`R CMD config CXX`"
     echo "CXX is ${CXX}"

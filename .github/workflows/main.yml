@@ -35,14 +35,25 @@ jobs:
           bioc-mirror: ${{ matrix.config.bioc-mirror }}
           
       - uses: r-lib/actions/setup-pandoc@v2
+      
+      - name: Install TinyTex
+        uses: r-lib/actions/setup-tinytex@v2
+        env:
+          TINYTEX_VERSION: 2023.04
+          TINYTEX_INSTALLER: TinyTeX
+
+      - name: Install latex fonts
+        if: runner.os != 'Windows'
+        run: |
+          tlmgr update --self && tlmgr install courier makeindex bera
+        shell: bash
+
+      - name: Install latex fonts
+        if: runner.os == 'Windows'
+        run: |
+          tlmgr update --self && tlmgr install courier makeindex bera
+        shell: pwsh
           
-      - name: Install dependencies
-        uses: r-lib/actions/setup-r-dependencies@v2
-        with:
-          extra-packages: |
-            covr
-            rcmdcheck
-            
       - name: Bioc - Build, Install, Check
         uses: grimbough/bioc-actions/build-install-check@v1
 
