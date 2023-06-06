@@ -54,8 +54,8 @@ else
 		}
 EOF
 
-                # first test the default gcc used by R
-                `R CMD config CC` -lgomp test.c -o test >/dev/null 2>&1
+    # first test the default gcc used by R
+    `R CMD config CC` -lgomp test.c -o test >/dev/null 2>&1
 		if [[ $? -eq 0 ]]; then
 			echo -e "* Using the default compiler"
 			CC="`R CMD config CC`"
@@ -63,35 +63,39 @@ EOF
 			OMP_FLAG="--enable-openmp"
 		# if there is no brew gcc installed try to compile with clang
 		else
-		        echo -e "* Defaulting to clang/clang++"
-		        CC="`${R} CMD config CC`"
+		  echo -e "* Defaulting to clang/clang++"
+		  CC="`${R} CMD config CC`"
 			CXX="`${R} CMD config CXX`"
 			if [ -z "$OMP_FLAG" ]; then
 			    OMP_FLAG="--disable-openmp"
-			fi 
+			fi  
 
 		fi
-		
 
-            rm -f test.*
-	    (cd src/SYMPHONY && \
-		    ./configure \
+    CXX="`echo ${CXX} | sed -e s/++[0-9][0-9]/++14/g`"
+
+    rm -f test.*
+	  (cd src/SYMPHONY && \
+		  ./configure \
 			CC="$CC" CXX="$CXX" \
 			CFLAGS="-w -g -O2" \
 			CXXFLAGS="-w -g -O2" \
-		--enable-static --disable-shared --with-pic \
-		--with-application=no --disable-dependency-tracking \
-		--disable-zlib --disable-bzlib "${OMP_FLAG}" \
-		--disable-cplex-libcheck --disable-glpk-libcheck \
-		--disable-osl-libcheck --disable-soplex-libcheck \
-		--disable-xpress-libcheck)
+		  --enable-static --disable-shared --with-pic \
+		  --with-application=no --disable-dependency-tracking \
+		  --disable-zlib --disable-bzlib "${OMP_FLAG}" \
+		  --disable-cplex-libcheck --disable-glpk-libcheck \
+		  --disable-osl-libcheck --disable-soplex-libcheck \
+		  --disable-xpress-libcheck)
 	    SYMPHONY_LIBS="-lSym -lCgl -lOsiClp -lClp -lOsi -lCoinUtils"
 	    SYMPHONY_INCLUDE_PATH="-ISYMPHONY/include"
 	    SYMPHONY_LIB_PATH="-LSYMPHONY/lib"
 	    SYMPHONY_TS="SYMPHONY.ts"
 
-        # for other (Unix) systems use
-        else
+  # for other (Unix) systems use
+  else
+    CXX="`R CMD config CXX`"
+    CXX="`echo ${CXX} | sed -e s/++[0-9][0-9]/++14/g`"
+
 	    (cd src/SYMPHONY && \
 		./configure \
 		--enable-static --disable-shared --with-pic \
@@ -103,9 +107,7 @@ EOF
 		CFLAGS="-w -g -O2" \
 		CXXFLAGS="-w -g -O2" \
 		CC="`${R} CMD config CC`" \
-		#CPP="`${R} CMD config CPP`" \
 		CXX="`${R} CMD config CXX`" \
-		#CXXCPP="`${R} CMD config CXXCPP`" \
 		F77="`${R} CMD config FC`" \
 		FLIBS="`${R} CMD config FLIBS`")
 	    SYMPHONY_LIBS="-lSym -lCgl -lOsiClp -lClp -lOsi -lCoinUtils"
