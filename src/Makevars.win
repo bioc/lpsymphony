@@ -4,6 +4,9 @@ SHLIB: lpsymphony
 
 PKG_CPPFLAGS = -ISYMPHONY/include
 PKG_LIBS = -llpsymphony -lm -L
+
+CXX_STD = CXX14
+
 R_symphony.o: lpsymphony
 
 lpsymphony: 

@@ -53,6 +53,9 @@ jobs:
         run: |
           tlmgr update --self && tlmgr install courier makeindex bera
         shell: pwsh
+        
+     - name: Install dependencies (non-Windows)
+        uses: r-lib/actions/setup-r-dependencies@v1
           
       - name: Bioc - Build, Install, Check
         uses: grimbough/bioc-actions/build-install-check@v1
