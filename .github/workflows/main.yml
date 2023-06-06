@@ -45,13 +45,13 @@ jobs:
       - name: Install latex fonts
         if: runner.os != 'Windows'
         run: |
-          tlmgr update --self && tlmgr install courier makeindex bera nowidow parnotes marginfix
+          tlmgr update --self && tlmgr install courier makeindex bera nowidow parnotes marginfix ragged2e
         shell: bash
 
       - name: Install latex fonts
         if: runner.os == 'Windows'
         run: |
-          tlmgr update --self && tlmgr install courier makeindex bera nowidow parnotes marginfix
+          tlmgr update --self && tlmgr install courier makeindex bera nowidow parnotes marginfix ragged2e
         shell: pwsh
         
       - name: Install dependencies (non-Windows)
