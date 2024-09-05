@@ -91,6 +91,7 @@ jobs:
             --workdir /build
           run: |
             ls -l
+            tlmgr update --self && tlmgr install courier makeindex bera nowidow parnotes marginfix
             R CMD INSTALL ${PKG} &> ${PKG}.install-out.txt 
             ls -l
           shell: bash
