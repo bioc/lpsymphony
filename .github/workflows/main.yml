@@ -17,7 +17,8 @@ jobs:
       matrix:
         config:
         - { os: windows-2022, bioc-version: 'devel', bioc-mirror: 'https://ftp.gwdg.de/pub/misc/bioconductor'}
-        - { os: macOS-11,     bioc-version: 'devel', bioc-mirror: 'https://ftp.gwdg.de/pub/misc/bioconductor'}
+        - { os: macOS-13,     bioc-version: 'devel', bioc-mirror: 'https://ftp.gwdg.de/pub/misc/bioconductor'}
+        - { os: macOS-14,     bioc-version: 'devel', bioc-mirror: 'https://ftp.gwdg.de/pub/misc/bioconductor'}
         - { os: ubuntu-22.04, bioc-version: 'devel', bioc-mirror: 'https://packagemanager.posit.co/bioconductor'}
 
     env:
@@ -26,7 +27,7 @@ jobs:
       
     steps:
           
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
           
       - name: Setup R and Bioconductor
         uses: grimbough/bioc-actions/setup-bioc@v1
@@ -39,7 +40,6 @@ jobs:
       - name: Install TinyTex
         uses: r-lib/actions/setup-tinytex@v2
         env:
-          TINYTEX_VERSION: 2023.04
           TINYTEX_INSTALLER: TinyTeX
 
       - name: Install latex fonts
