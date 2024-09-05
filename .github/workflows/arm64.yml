@@ -3,7 +3,8 @@ name: Linux ARM64
 on:
   push:
     branches:
-    - main
+    - devel
+    - arm64-workflow
   workflow_dispatch:
   
 env:
@@ -91,7 +92,7 @@ jobs:
             --workdir /build
           run: |
             ls -l
-            tlmgr update --self && tlmgr install courier makeindex bera nowidow parnotes marginfix
+            tlmgr update --self && tlmgr install tikz
             R CMD INSTALL ${PKG} &> ${PKG}.install-out.txt 
             ls -l
           shell: bash
@@ -108,9 +109,8 @@ jobs:
             --env PKG=${{ env.PKG }}
             --workdir /build
           run: |
-            ls -l "${R_LIBS_USER}"
+            tlmgr update --self && tlmgr install tikz
             R CMD build --keep-empty-dirs --no-resave-data ${PKG}
-            ls -l
 
       - name: R CMD check
         uses: addnab/docker-run-action@v3
@@ -124,10 +124,9 @@ jobs:
             --env PKG=${{ env.PKG }}
             --workdir /build
           run: |
-            ls -l
+            tlmgr update --self && tlmgr install tikz
             R CMD check --install=check:${PKG}.install-out.txt --library="${R_LIBS_USER}" --no-vignettes --timings ${PKG}*.tar.gz
             cat ${PKG}.install-out.txt
-            ls -l
 
       - name: Build Package Binary
         uses: addnab/docker-run-action@v3
@@ -141,9 +140,9 @@ jobs:
             --env PKG=${{ env.PKG }}
             --workdir /build
           run: |
+            tlmgr update --self && tlmgr install tikz
             mkdir -p ${PKG}.buildbin-libdir
             R CMD INSTALL --build --library=${PKG}.buildbin-libdir ${PKG}*.tar.gz
-            ls -l
 
       - uses: actions/upload-artifact@v4
         if: always()
