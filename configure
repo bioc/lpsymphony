@@ -58,14 +58,14 @@ EOF
     `R CMD config CC` -lgomp test.c -o test >/dev/null 2>&1
 		if [[ $? -eq 0 ]]; then
 			echo -e "* Using the default compiler"
-			CC="`R CMD config CC`"
-			CXX="`R CMD config CXX`"
+			CC=`"${R_HOME}/bin/R" CMD config CC`
+			CXX=`"${R_HOME}/bin/R" CMD config CXX`
 			OMP_FLAG="--enable-openmp"
 		# if there is no brew gcc installed try to compile with clang
 		else
 		  echo -e "* Defaulting to clang/clang++"
-		  CC="`${R} CMD config CC`"
-			CXX="`${R} CMD config CXX`"
+		  CC=`"${R_HOME}/bin/R" CMD config CC`
+			CXX=`"${R_HOME}/bin/R" CMD config CC`
 			if [ -z "$OMP_FLAG" ]; then
 			    OMP_FLAG="--disable-openmp"
 			fi  
@@ -95,7 +95,8 @@ EOF
 
   # for other (Unix) systems use
   else
-    CXX="`R CMD config CXX`"
+    CC=`"${R_HOME}/bin/R" CMD config CC`
+    CXX=`"${R_HOME}/bin/R" CMD config CXX`
     echo "CXX is ${CXX}"
     CXX="`echo ${CXX} | sed -e s/++17/++14/g`"
     echo "CXX is ${CXX}"
@@ -110,10 +111,8 @@ EOF
 		--disable-xpress-libcheck \
 		CFLAGS="-w -g -O2" \
 		CXXFLAGS="-w -g -O2" \
-		CC="`${R} CMD config CC`" \
-		#CPP="`${R} CMD config CPP`" \
+		CC=`"${R_HOME}/bin/R" CMD config CC` \
 		CXX="`${R} CMD config CXX`" \
-		#CXXCPP="`${R} CMD config CXXCPP`" \
 		F77="`${R} CMD config FC`" \
 		FLIBS="`${R} CMD config FLIBS`")
 	    SYMPHONY_LIBS="-lSym -lCgl -lOsiClp -lClp -lOsi -lCoinUtils"
