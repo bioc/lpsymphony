@@ -1,0 +1,14 @@
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+src/*.o
+src/*.so
+src/*.dll
+
+src/SYMPHONY/share/
+src/SYMPHONY/*/src/**/*.o
+src/SYMPHONY/*/src/**/*.lo
+src/SYMPHONY/SYMPHONY/src/libSym*
+src/SYMPHONY/Cgl/src/**/Makefile
+src/SYMPHONY/Cgl/src/**/*.la
