@@ -43,6 +43,8 @@ else
 	# if Mac OS X need to specify C compiler
 
 	if [[ "$OSTYPE" == "darwin"* ]]; then 
+	
+	echo "Running on Darwin"
 
 		cat << EOF > test.c
 		#include <omp.h>
@@ -65,11 +67,10 @@ EOF
 		else
 		  echo -e "* Defaulting to clang/clang++"
 		  CC=`"${R_HOME}/bin/R" CMD config CC`
-			CXX=`"${R_HOME}/bin/R" CMD config CC`
+			CXX=`"${R_HOME}/bin/R" CMD config CXX`
 			if [ -z "$OMP_FLAG" ]; then
 			    OMP_FLAG="--disable-openmp"
 			fi  
-
 		fi
 
     echo "CXX is ${CXX}"
@@ -95,6 +96,9 @@ EOF
 
   # for other (Unix) systems use
   else
+  
+  	echo "Running on Linux"
+  
     CC=`"${R_HOME}/bin/R" CMD config CC`
     CXX=`"${R_HOME}/bin/R" CMD config CXX`
     echo "CXX is ${CXX}"
