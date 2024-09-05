@@ -9,7 +9,7 @@ rm -f config.* autom4te.cache src/SYMPHONY.ts src/Makevars
 rm -rf src/SYMPHONY/lib
 rm -rf src/SYMPHONY/bin
 
-if [ "$OSTYPE" == "linux-gnu" ] || [ $OSTYPE == "darwin"*] ; then
+if [ "$OSTYPE" == "linux-gnu" ] || [ $OSTYPE == "darwin"* ] ; then
     rm -rf src/WinLib
 fi
 exit 0
