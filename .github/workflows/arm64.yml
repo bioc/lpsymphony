@@ -51,6 +51,7 @@ jobs:
             uname -a
             echo "options(Ncpus=4L, timeout = 300)" >> ~/.Rprofile
             Rscript -e "library(remotes)" -e "dev_package_deps('/build/${PKG}', dependencies = TRUE) |> update(upgrade = 'always')"
+            Rscript -e "BiocManager::install(version = 'devel', update = TRUE, ask = FALSE)"
             
   check-arm64:
     name: Test package on ARM64
@@ -91,8 +92,6 @@ jobs:
             --env PKG=${{ env.PKG }}
             --workdir /build
           run: |
-            ls -l
-            tlmgr update --self && tlmgr install pgf
             R CMD INSTALL ${PKG} &> ${PKG}.install-out.txt 
             ls -l
           shell: bash
@@ -109,7 +108,6 @@ jobs:
             --env PKG=${{ env.PKG }}
             --workdir /build
           run: |
-            tlmgr update --self && tlmgr install pgf
             R CMD build --keep-empty-dirs --no-resave-data ${PKG}
 
       - name: R CMD check
@@ -124,7 +122,6 @@ jobs:
             --env PKG=${{ env.PKG }}
             --workdir /build
           run: |
-            tlmgr update --self && tlmgr install pgf
             R CMD check --install=check:${PKG}.install-out.txt --library="${R_LIBS_USER}" --no-vignettes --timings ${PKG}*.tar.gz
             cat ${PKG}.install-out.txt
 
@@ -140,7 +137,6 @@ jobs:
             --env PKG=${{ env.PKG }}
             --workdir /build
           run: |
-            tlmgr update --self && tlmgr install pgf
             mkdir -p ${PKG}.buildbin-libdir
             R CMD INSTALL --build --library=${PKG}.buildbin-libdir ${PKG}*.tar.gz
 
