@@ -20,7 +20,7 @@ jobs:
         uses: actions/checkout@v4
         
       - name: Set up QEMU
-        uses: docker/setup-qemu-action@v2
+        uses: docker/setup-qemu-action@v3
         with:
           platforms: arm64
         
@@ -65,7 +65,7 @@ jobs:
         run: mkdir -p ${RUNNER_TEMP}/R-lib
         
       - name: Set up QEMU
-        uses: docker/setup-qemu-action@v2
+        uses: docker/setup-qemu-action@v3
         with:
           platforms: arm64
 
@@ -92,7 +92,7 @@ jobs:
             --workdir /build
           run: |
             ls -l
-            tlmgr update --self && tlmgr install tikz
+            tlmgr update --self && tlmgr install pgf
             R CMD INSTALL ${PKG} &> ${PKG}.install-out.txt 
             ls -l
           shell: bash
@@ -109,7 +109,7 @@ jobs:
             --env PKG=${{ env.PKG }}
             --workdir /build
           run: |
-            tlmgr update --self && tlmgr install tikz
+            tlmgr update --self && tlmgr install pgf
             R CMD build --keep-empty-dirs --no-resave-data ${PKG}
 
       - name: R CMD check
@@ -124,7 +124,7 @@ jobs:
             --env PKG=${{ env.PKG }}
             --workdir /build
           run: |
-            tlmgr update --self && tlmgr install tikz
+            tlmgr update --self && tlmgr install pgf
             R CMD check --install=check:${PKG}.install-out.txt --library="${R_LIBS_USER}" --no-vignettes --timings ${PKG}*.tar.gz
             cat ${PKG}.install-out.txt
 
@@ -140,7 +140,7 @@ jobs:
             --env PKG=${{ env.PKG }}
             --workdir /build
           run: |
-            tlmgr update --self && tlmgr install tikz
+            tlmgr update --self && tlmgr install pgf
             mkdir -p ${PKG}.buildbin-libdir
             R CMD INSTALL --build --library=${PKG}.buildbin-libdir ${PKG}*.tar.gz
 
