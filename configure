@@ -99,11 +99,10 @@ EOF
   
   	echo "Running on Linux"
   
-    CC=`"${R_HOME}/bin/R" CMD config CC`
-    CXX=`"${R_HOME}/bin/R" CMD config CXX`
-    echo "CXX is ${CXX}"
-    CXX="`echo ${CXX} | sed -e s/++17/++14/g`"
-    echo "CXX is ${CXX}"
+    CC="`${R_HOME}/bin/R CMD config CC`"
+    CXX="`${R_HOME}/bin/R CMD config CXX`"
+    F77="`${R_HOME}/bin/R CMD config FC`"
+    FLIBS="`${R_HOME}/bin/R CMD config FLIBS`"
   
 	    (cd src/SYMPHONY && \
 		./configure \
@@ -115,10 +114,10 @@ EOF
 		--disable-xpress-libcheck \
 		CFLAGS="-w -g -O2" \
 		CXXFLAGS="-w -g -O2" \
-		CC=`"${R_HOME}/bin/R" CMD config CC` \
-		CXX="`${R} CMD config CXX`" \
-		F77="`${R} CMD config FC`" \
-		FLIBS="`${R} CMD config FLIBS`")
+		CC="${CC}" \
+		CXX="${CXX}" \
+		F77="${F77}" \
+		FLIBS="${FLIBS}")
 	    SYMPHONY_LIBS="-lSym -lCgl -lOsiClp -lClp -lOsi -lCoinUtils"
 	    SYMPHONY_INCLUDE_PATH="-ISYMPHONY/include"
 	    SYMPHONY_LIB_PATH="-LSYMPHONY/lib"
