@@ -12,3 +12,4 @@ src/SYMPHONY/*/src/**/*.lo
 src/SYMPHONY/SYMPHONY/src/libSym*
 src/SYMPHONY/Cgl/src/**/Makefile
 src/SYMPHONY/Cgl/src/**/*.la
+src/SYMPHONY/*
